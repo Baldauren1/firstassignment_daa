@@ -1,10 +1,12 @@
 package org.example.select;
 
-import java.util.Arrays;
 import org.example.metrics.Metrics;
+import java.util.Arrays;
+import java.util.Random;
 
 public class DeterministicSelect {
     private final Metrics m;
+    private final Random rnd = new Random();
 
     public DeterministicSelect(Metrics m) {
         this.m = m;
@@ -16,10 +18,9 @@ public class DeterministicSelect {
 
     private int select(int[] a, int l, int r, int k) {
         while (true) {
-            if (l == r) {
-                return a[l];
-            }
+            if (l == r) return a[l];
 
+            // правильный pivot (Median of Medians)
             int pivot = medianOfMedians(a, l, r);
             int pivotIndex = partition(a, l, r, pivot);
 
@@ -34,8 +35,7 @@ public class DeterministicSelect {
     }
 
     private int partition(int[] a, int l, int r, int pivot) {
-        int i = l;
-        int j = r;
+        int i = l, j = r;
         while (i <= j) {
             while (i <= j && a[i] < pivot) {
                 m.comparisons++;
@@ -46,9 +46,9 @@ public class DeterministicSelect {
                 j--;
             }
             if (i <= j) {
-                int t = a[i];
+                int tmp = a[i];
                 a[i] = a[j];
-                a[j] = t;
+                a[j] = tmp;
                 m.swaps++;
                 i++;
                 j--;
@@ -66,7 +66,6 @@ public class DeterministicSelect {
 
         int numMedians = (n + 4) / 5;
         int[] medians = new int[numMedians];
-
         for (int i = 0; i < numMedians; i++) {
             int start = l + i * 5;
             int end = Math.min(start + 4, r);

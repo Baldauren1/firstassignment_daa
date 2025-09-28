@@ -4,7 +4,6 @@ import org.example.metrics.Metrics;
 import org.example.sort.MergeSort;
 import org.example.sort.QuickSort;
 import org.example.select.DeterministicSelect;
-import org.example.closest.ClosestPair;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,8 +1,7 @@
 package org.example.select;
 
-import org.example.metrics.Metrics;
-
 import java.util.Arrays;
+import org.example.metrics.Metrics;
 
 public class DeterministicSelect {
     private final Metrics m;
@@ -35,7 +34,8 @@ public class DeterministicSelect {
     }
 
     private int partition(int[] a, int l, int r, int pivot) {
-        int i = l, j = r;
+        int i = l;
+        int j = r;
         while (i <= j) {
             while (i <= j && a[i] < pivot) {
                 m.comparisons++;

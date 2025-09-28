@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+# Activation via PowerShell
+# C:\Users\user\AppData\Local\Programs\Python\Python312\python.exe D:\Projects\firstproject_daa_B2421\scripts\aggregate_and_plot.py
 
 os.makedirs('plots', exist_ok=True)
 

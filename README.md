@@ -1,7 +1,5 @@
 # Assignment 1 — Divide and Conquer Algorithms
-
 ## Learning Goals
-
 * Implement classic *divide-and-conquer* algorithms with safe recursion patterns.
 * Analyze running-time recurrences using **Master Theorem** (3 cases) and **Akra–Bazzi intuition**.
 * Validate theoretical analysis with experimental measurements.
@@ -12,7 +10,6 @@
 ---
 
 ## Project Structure
-
 ```
 pom.xml
 requirements.txt
@@ -37,7 +34,6 @@ src/
 ---
 
 ## Algorithms
-
 ### 1. MergeSort (D&C, Master Case 2)
 
 * Divide the array into two halves, sort recursively, then merge.
@@ -50,7 +46,6 @@ src/
   ```
 
 ### 2. QuickSort (robust)
-
 * Pivot is chosen **randomly**.
 * Always recurse into the **smaller partition**, handle the larger one iteratively → ensures stack depth O(log n).
 * Recurrence (average case):
@@ -60,14 +55,12 @@ src/
   ```
 
 ### 3. Deterministic Select (Median of Medians, O(n))
-
 * Divide array into groups of 5, find median of each group.
 * Recursively compute the **median of medians** as pivot.
 * Recurse only into the side containing the k-th element.
 * Guarantees O(n) worst-case runtime.
 
 ### 4. Closest Pair of Points (2D, O(n log n))
-
 * Sort points by **x-coordinate**.
 * Recursively solve for left and right halves.
 * In the “strip”, check only 7–8 neighbors sorted by **y-coordinate**.
@@ -80,27 +73,22 @@ src/
 ---
 
 ##  Metrics and Plots
-
 The program generates a CSV file (`metrics_ns.csv`) with recorded results.
 Analysis can be done via Python (`aggregate_and_plot.py`) or Excel.
 
 Collected metrics:
-
 * **Execution time (ns)** — averaged across multiple trials.
 * **Recursion depth** (for MergeSort and QuickSort).
 * **Comparisons / swaps** (for sorting and Select).
 
 ### Example Table (average time, ns)
-
 [execution_time_table.md](plots/execution_time_table.md)
 
 ### Example Plot
-
 ![Execution time](plots/time_vs_n_ns.png)
 ---
 
 ##  Testing
-
 * **Sorting**: correctness on random and adversarial arrays.
 * **Recursion depth**: verified that QuickSort depth ≤ 2⌊log₂n⌋ + O(1).
 * **Select**: compared with `Arrays.sort(a)[k]` across 100 random trials.
@@ -109,7 +97,6 @@ Collected metrics:
 ---
 
 ##  Git Workflow
-
 * Branches:
 
     * `main` — only stable releases (v0.1, v1.0).
@@ -127,7 +114,6 @@ Collected metrics:
 ---
 
 ## Summary
-
 * Theory and experiments align:
 
     * MergeSort and QuickSort follow Θ(n log n).

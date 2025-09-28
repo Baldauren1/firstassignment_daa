@@ -1,26 +1,34 @@
-package org.example.sort;
+package org.example;
+
 import org.example.metrics.Metrics;
-import org.example.util.ArrayUtil;
+
 import java.util.Random;
+
 public class QuickSort {
-    private Metrics m;
-    private Random rnd = new Random(12345);
-    public QuickSort(Metrics m){ this.m=m; }
-    public void sort(int[] a){
-        if(a==null || a.length<=1) return;
-        ArrayUtil.shuffle(a, rnd);
-        sort(a,0,a.length-1);
+    private final Metrics m;
+    private final Random rnd = new Random();
+
+    public QuickSort(Metrics m) {
+        this.m = m;
     }
+
+    public void sort(int[] a) {
+        sort(a, 0, a.length - 1);
+    }
+
     private void sort(int[] a, int l, int r) {
         while (l < r) {
             m.enter();
+
             if (r - l + 1 <= 16) {
-                // insertion sort
                 for (int i = l; i <= r; i++) {
                     for (int j = i; j > l; j--) {
                         m.comparisons++;
                         if (a[j] < a[j - 1]) {
-                            int t = a[j]; a[j] = a[j - 1]; a[j - 1] = t; m.swaps++;
+                            int t = a[j];
+                            a[j] = a[j - 1];
+                            a[j - 1] = t;
+                            m.swaps++;
                         } else break;
                     }
                 }
@@ -28,6 +36,7 @@ public class QuickSort {
                 return;
             }
 
+            // partition
             int p = partition(a, l, r);
 
             if (p - l < r - p) {
@@ -41,18 +50,28 @@ public class QuickSort {
         }
     }
 
-
     private int partition(int[] a, int l, int r) {
         int pivot = a[l + rnd.nextInt(r - l + 1)];
         int i = l - 1;
         int j = r + 1;
         while (true) {
-            do { i++; m.comparisons++; } while (a[i] < pivot);
-            do { j--; m.comparisons++; } while (a[j] > pivot);
+            do {
+                i++;
+                m.comparisons++;
+            } while (a[i] < pivot);
+
+            do {
+                j--;
+                m.comparisons++;
+            } while (a[j] > pivot);
+
             if (i >= j) {
                 return j;
             }
-            int t = a[i]; a[i] = a[j]; a[j] = t;
+
+            int t = a[i];
+            a[i] = a[j];
+            a[j] = t;
             m.swaps++;
         }
     }

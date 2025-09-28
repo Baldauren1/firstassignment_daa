@@ -1,4 +1,4 @@
-package org.example;
+package org.example.sort;
 
 import org.example.metrics.Metrics;
 

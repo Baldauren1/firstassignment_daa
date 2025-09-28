@@ -1,4 +1,4 @@
-package org.example;
+package org.example.select;
 
 import org.example.metrics.Metrics;
 

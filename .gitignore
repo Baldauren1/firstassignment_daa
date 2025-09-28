@@ -1,0 +1,8 @@
+# Maven / Java
+/target/
+*.class
+*.log
+.idea/
+*.iml
+.vscode/
+.DS_Store

@@ -1,0 +1,11 @@
+init: maven, junit5, ci, readme
+feat(metrics): counters, depth tracker, CSV writer
+feat(mergesort): baseline + reuse buffer + cutoff + tests
+feat(quicksort): smaller-first recursion, randomized pivot + tests
+refactor(util): partition, swap, shuffle, guards
+feat(select): deterministic select (MoM5) + tests
+feat(closest): divide-and-conquer implementation + tests
+feat(cli): measurement harness (nanoTime) + metrics_ns.csv
+docs(report): initial report template & instructions
+fix: edge cases (duplicates, tiny arrays)
+release: v1.0

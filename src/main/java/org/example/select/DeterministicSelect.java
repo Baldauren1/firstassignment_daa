@@ -2,11 +2,9 @@ package org.example.select;
 
 import org.example.metrics.Metrics;
 import java.util.Arrays;
-import java.util.Random;
 
 public class DeterministicSelect {
     private final Metrics m;
-    private final Random rnd = new Random();
 
     public DeterministicSelect(Metrics m) {
         this.m = m;
@@ -20,9 +18,8 @@ public class DeterministicSelect {
         while (true) {
             if (l == r) return a[l];
 
-            // правильный pivot (Median of Medians)
-            int pivot = medianOfMedians(a, l, r);
-            int pivotIndex = partition(a, l, r, pivot);
+            int pivotIndex = medianOfMediansIndex(a, l, r);
+            pivotIndex = partition(a, l, r, pivotIndex);
 
             if (k == pivotIndex) {
                 return a[k];
@@ -34,45 +31,46 @@ public class DeterministicSelect {
         }
     }
 
-    private int partition(int[] a, int l, int r, int pivot) {
-        int i = l, j = r;
-        while (i <= j) {
-            while (i <= j && a[i] < pivot) {
-                m.comparisons++;
-                i++;
-            }
-            while (i <= j && a[j] > pivot) {
-                m.comparisons++;
-                j--;
-            }
-            if (i <= j) {
-                int tmp = a[i];
-                a[i] = a[j];
-                a[j] = tmp;
-                m.swaps++;
-                i++;
-                j--;
+    private int partition(int[] a, int l, int r, int pivotIndex) {
+        int pivot = a[pivotIndex];
+        swap(a, pivotIndex, r);
+        int storeIndex = l;
+        for (int i = l; i < r; i++) {
+            m.comparisons++;
+            if (a[i] < pivot) {
+                swap(a, i, storeIndex);
+                storeIndex++;
             }
         }
-        return i - 1;
+        swap(a, storeIndex, r);
+        return storeIndex;
     }
 
-    private int medianOfMedians(int[] a, int l, int r) {
+    private int medianOfMediansIndex(int[] a, int l, int r) {
         int n = r - l + 1;
         if (n <= 5) {
             Arrays.sort(a, l, r + 1);
-            return a[l + n / 2];
+            return l + n / 2;
         }
 
         int numMedians = (n + 4) / 5;
-        int[] medians = new int[numMedians];
         for (int i = 0; i < numMedians; i++) {
-            int start = l + i * 5;
-            int end = Math.min(start + 4, r);
-            Arrays.sort(a, start, end + 1);
-            medians[i] = a[start + (end - start) / 2];
+            int subLeft = l + i * 5;
+            int subRight = Math.min(subLeft + 4, r);
+            Arrays.sort(a, subLeft, subRight + 1);
+            int medianIndex = subLeft + (subRight - subLeft) / 2;
+            swap(a, l + i, medianIndex);
         }
 
-        return medianOfMedians(medians, 0, numMedians - 1);
+        return medianOfMediansIndex(a, l, l + numMedians - 1);
+    }
+
+    private void swap(int[] a, int i, int j) {
+        if (i != j) {
+            int tmp = a[i];
+            a[i] = a[j];
+            a[j] = tmp;
+            m.swaps++;
+        }
     }
 }
